@@ -1,10 +1,10 @@
 # Running the project locally (without Docker)
 
+## Build project
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-
-uvicorn app.main:app --reload
+docker build -t final-project-tdo .
+```
+## Run
+```bash
+docker run -p 8000:8000 final-project-tdo
 ```
