@@ -3,7 +3,9 @@ from pathlib import Path
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from routers import books
+from contextlib import asynccontextmanager
 from database import Base, engine
+import os
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,10 +19,11 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 app.include_router(books.router)
 
 
-@app.on_event("startup")
-async def startup_event():
-    from app.init_db import init_db
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    from init_db import init_db
     init_db()
+    yield
 
 
 @app.get("/")
@@ -30,4 +33,4 @@ def home(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
