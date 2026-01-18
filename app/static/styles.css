@@ -1,3 +1,5 @@
+/* app/static/styles.css */
+
 * {
   box-sizing: border-box;
 }
@@ -45,14 +47,18 @@ nav a:hover {
 main {
   max-width: 980px;
   margin: 18px auto;
-  padding: 0 18px 28px 18px;
-}
-
-main > * {
+  padding: 18px;                 /* karta od razu na main */
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 18px;
+}
+
+/* usuń „kartę” z każdego elementu w main */
+main > * {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
 }
 
 h2 {
@@ -73,6 +79,8 @@ ul {
 li {
   margin: 6px 0;
   color: #1f2937;
+  list-style: none;
+  padding: 0;
 }
 
 main a {
