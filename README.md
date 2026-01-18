@@ -1,4 +1,4 @@
-# Running the project locally (without Docker)
+# Running the project locally
 
 ## Build project
 ```bash
