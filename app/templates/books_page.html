@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Baza książek</h2>
+
+<p><a href="/books/new">Dodaj książkę</a></p>
+
+{% if books|length == 0 %}
+  <p>Brak książek w bazie.</p>
+{% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th>Rok</th>
+        <th>Opis</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in books %}
+      <tr>
+        <td>{{ b.id }}</td>
+        <td>{{ b.title }}</td>
+        <td>{{ b.author }}</td>
+        <td>{{ b.year if b.year else "-" }}</td>
+        <td>{{ b.description if b.description else "-" }}</td>
+        <td>
+          <a href="/books/{{ b.id }}/edit">Edytuj</a>
+          <form method="post" action="/books/{{ b.id }}/delete" style="display:inline">
+            <button type="submit">Usuń</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}
