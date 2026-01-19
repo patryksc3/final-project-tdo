@@ -21,7 +21,7 @@ app.include_router(books.router)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    from init_db import init_db
+    from app.init_db import init_db
     init_db()
     yield
 

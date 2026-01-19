@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edytuj książkę \#{{ book.id }}</h2>
+
+<form method="post" action="/books/{{ book.id }}/edit">
+  <p>
+    <label>Tytuł<br>
+      <input type="text" name="title" value="{{ book.title }}" required>
+    </label>
+  </p>
+
+  <p>
+    <label>Autor<br>
+      <input type="text" name="author" value="{{ book.author }}" required>
+    </label>
+  </p>
+
+  <p>
+    <label>Rok<br>
+      <input type="number" name="year" min="0" value="{{ book.year if book.year else '' }}">
+    </label>
+  </p>
+
+  <p>
+    <label>Opis<br>
+      <textarea name="description" rows="4" cols="40">{{ book.description if book.description else '' }}</textarea>
+    </label>
+  </p>
+
+  <p>
+    <button type="submit">Zapisz zmiany</button>
+    <a href="/books/page">Anuluj</a>
+  </p>
+</form>
+{% endblock %}
