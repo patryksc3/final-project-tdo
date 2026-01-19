@@ -1,10 +1,5 @@
-# Running the project locally (without Docker)
+# Running the project locally
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-
-uvicorn app.main:app --reload
+docker-compose up
 ```
