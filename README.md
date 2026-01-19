@@ -1,5 +1,5 @@
 # Running the project locally
 
 ```bash
-docker-compose up
+docker compose up
 ```
