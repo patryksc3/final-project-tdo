@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from app.routers import books
 from contextlib import asynccontextmanager
 from app.database import Base, engine
-
+from prometheus_fastapi_instrumentator import Instrumentator
 import os
 
 Base.metadata.create_all(bind=engine)
