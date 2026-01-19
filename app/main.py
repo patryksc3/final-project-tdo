@@ -1,11 +1,10 @@
-from contextlib import asynccontextmanager
-from pathlib import Path
 from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from fastapi.templating import Jinja2Templates
-from app.database import Base, engine
-from app.init_db import init_db
+from fastapi.staticfiles import StaticFiles
 from app.routers import books
+from contextlib import asynccontextmanager
+from app.database import Base, engine
 import os
 
 Base.metadata.create_all(bind=engine)
@@ -15,7 +14,7 @@ app = FastAPI(title="LibraryLite")
 BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 static_dir = os.path.join(BASE_DIR, "static")
-app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 app.include_router(books.router)
 
