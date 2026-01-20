@@ -1,4 +1,3 @@
-# app/routers/books.py
 from fastapi import APIRouter, Depends, Request, HTTPException, status
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
