@@ -1,26 +1,50 @@
 services:
   app:
-    build: .             
-    container_name: final-project-container
+    build: .
+    container_name: final-project-app
     ports:
-      - "8000:8000"     
+      - "8000:8000"
     volumes:
-      - .:/app         
+      - .:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - monitoring-net
+    restart: unless-stopped
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.45.0
+    container_name: final-project-prometheus
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml #
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
     ports:
       - "9090:9090"
-
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - monitoring-net
+    restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:10.1.0
+    container_name: final-project-grafana
     ports:
       - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+    networks:
+      - monitoring-net
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  monitoring-net:
+    driver: bridge
